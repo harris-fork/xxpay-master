@@ -7,7 +7,6 @@ import org.xxpay.common.domain.BaseParam;
 import org.xxpay.common.enumm.RetEnum;
 import org.xxpay.common.util.*;
 import org.xxpay.dal.dao.model.RefundOrder;
-import org.xxpay.dubbo.api.service.IRefundOrderService;
 import org.xxpay.dubbo.service.BaseService4RefundOrder;
 import org.xxpay.dubbo.service.mq.Mq4RefundNotify;
 
@@ -19,14 +18,14 @@ import java.util.Map;
  * @description:
  */
 @Service(version = "1.0.0")
-public class RefundOrderServiceImpl extends BaseService4RefundOrder implements IRefundOrderService {
+public class RPCRefundOrderService extends BaseService4RefundOrder {
 
-    private static final MyLog _log = MyLog.getLog(RefundOrderServiceImpl.class);
+    private static final MyLog _log = MyLog.getLog(RPCRefundOrderService.class);
 
     @Autowired
     private Mq4RefundNotify mq4RefundNotify;
 
-    @Override
+    
     public Map create(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -48,7 +47,7 @@ public class RefundOrderServiceImpl extends BaseService4RefundOrder implements I
         return RpcUtil.createBizResult(baseParam, result);
     }
 
-    @Override
+    
     public Map select(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -67,7 +66,7 @@ public class RefundOrderServiceImpl extends BaseService4RefundOrder implements I
         return RpcUtil.createBizResult(baseParam, jsonResult);
     }
 
-    @Override
+    
     public Map selectByMchIdAndRefundOrderId(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -87,7 +86,7 @@ public class RefundOrderServiceImpl extends BaseService4RefundOrder implements I
         return RpcUtil.createBizResult(baseParam, jsonResult);
     }
 
-    @Override
+    
     public Map selectByMchIdAndMchRefundNo(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -107,7 +106,7 @@ public class RefundOrderServiceImpl extends BaseService4RefundOrder implements I
         return RpcUtil.createBizResult(baseParam, jsonResult);
     }
 
-    @Override
+    
     public Map updateStatus4Ing(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -125,7 +124,7 @@ public class RefundOrderServiceImpl extends BaseService4RefundOrder implements I
         return RpcUtil.createBizResult(baseParam, result);
     }
 
-    @Override
+    
     public Map updateStatus4Success(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -142,7 +141,7 @@ public class RefundOrderServiceImpl extends BaseService4RefundOrder implements I
         return RpcUtil.createBizResult(baseParam, result);
     }
 
-    @Override
+    
     public Map updateStatus4Complete(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -159,7 +158,7 @@ public class RefundOrderServiceImpl extends BaseService4RefundOrder implements I
         return RpcUtil.createBizResult(baseParam, result);
     }
 
-    @Override
+    
     public Map sendRefundNotify(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();

@@ -8,6 +8,10 @@ import org.xxpay.common.constant.PayConstant;
 import org.xxpay.common.util.MyLog;
 import org.xxpay.common.util.RpcUtil;
 import org.xxpay.common.util.XXPayUtil;
+import org.xxpay.dubbo.service.impl.RPCNotifyPayService;
+import org.xxpay.dubbo.service.impl.RPCPayChannel4AliService;
+import org.xxpay.dubbo.service.impl.RPCPayChannel4WxService;
+import org.xxpay.dubbo.service.impl.RPCRefundOrderService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,14 +26,19 @@ public class RefundOrderService {
 
     private static final MyLog _log = MyLog.getLog(RefundOrderService.class);
 
-    @Autowired
-    private RpcCommonService rpcCommonService;
+    private RPCRefundOrderService rpcRefundOrderService;
+
+    private RPCNotifyPayService rpcNotifyPayService;
+
+    private RPCPayChannel4WxService rpcRPCPayChannel4WxService;
+
+    private RPCPayChannel4AliService rpcRPCPayChannel4AliService;
 
     public int create(JSONObject refundOrder) {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("refundOrder", refundOrder);
         String jsonParam = RpcUtil.createBaseParam(paramMap);
-        Map<String, Object> result = rpcCommonService.rpcRefundOrderService.create(jsonParam);
+        Map<String, Object> result = rpcRefundOrderService.create(jsonParam);
         String s = RpcUtil.mkRet(result);
         if(s == null) return 0;
         return Integer.parseInt(s);
@@ -42,7 +51,7 @@ public class RefundOrderService {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("msg", object);
         String jsonParam = RpcUtil.createBaseParam(paramMap);
-        rpcCommonService.rpcRefundOrderService.sendRefundNotify(jsonParam);
+        rpcRefundOrderService.sendRefundNotify(jsonParam);
     }
 
     public JSONObject query(String mchId, String refundOrderId, String mchRefundNo, String executeNotify) {
@@ -52,12 +61,12 @@ public class RefundOrderService {
             paramMap.put("mchId", mchId);
             paramMap.put("refundOrderId", refundOrderId);
             String jsonParam = RpcUtil.createBaseParam(paramMap);
-            result = rpcCommonService.rpcRefundOrderService.selectByMchIdAndRefundOrderId(jsonParam);
+            result = rpcRefundOrderService.selectByMchIdAndRefundOrderId(jsonParam);
         }else {
             paramMap.put("mchId", mchId);
             paramMap.put("mchRefundNo", mchRefundNo);
             String jsonParam = RpcUtil.createBaseParam(paramMap);
-            result = rpcCommonService.rpcRefundOrderService.selectByMchIdAndMchRefundNo(jsonParam);
+            result = rpcRefundOrderService.selectByMchIdAndMchRefundNo(jsonParam);
         }
         String s = RpcUtil.mkRet(result);
         if(s == null) return null;
@@ -67,7 +76,7 @@ public class RefundOrderService {
             paramMap = new HashMap<>();
             paramMap.put("refundOrderId", refundOrderId);
             String jsonParam = RpcUtil.createBaseParam(paramMap);
-            result = rpcCommonService.rpcNotifyPayService.sendBizPayNotify(jsonParam);
+            result = rpcNotifyPayService.sendBizPayNotify(jsonParam);
             s = RpcUtil.mkRet(result);
             _log.info("业务查单完成,并再次发送业务支付通知.发送结果:{}", s);
         }
@@ -79,7 +88,7 @@ public class RefundOrderService {
         paramMap.put("tradeType", tradeType);
         paramMap.put("refundOrder", refundOrder);
         String jsonParam = RpcUtil.createBaseParam(paramMap);
-        Map<String, Object> result = rpcCommonService.rpcPayChannel4AliService.doAliRefundReq(jsonParam);
+        Map<String, Object> result = rpcRPCPayChannel4AliService.doAliRefundReq(jsonParam);
         String s = RpcUtil.mkRet(result);
         if(s == null) {
             return XXPayUtil.makeRetData(XXPayUtil.makeRetMap(PayConstant.RETURN_VALUE_SUCCESS, "", PayConstant.RETURN_VALUE_FAIL, "0111", "调用微信支付失败"), resKey);

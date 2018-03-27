@@ -1,16 +1,13 @@
 package org.xxpay.dubbo.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.xxpay.common.domain.BaseParam;
 import org.xxpay.common.enumm.RetEnum;
 import org.xxpay.common.util.JsonUtil;
 import org.xxpay.common.util.MyLog;
 import org.xxpay.common.util.ObjectValidUtil;
 import org.xxpay.common.util.RpcUtil;
-import org.xxpay.dal.dao.mapper.PayChannelMapper;
 import org.xxpay.dal.dao.model.PayChannel;
-import org.xxpay.dubbo.api.service.IPayChannelService;
 import org.xxpay.dubbo.service.BaseService;
 
 import java.util.Map;
@@ -21,11 +18,11 @@ import java.util.Map;
  * @description:
  */
 @Service(version = "1.0.0")
-public class PayChannelServiceImpl extends BaseService implements IPayChannelService {
+public class RPCPayChannelService extends BaseService {
 
-    private static final MyLog _log = MyLog.getLog(PayChannelServiceImpl.class);
+    private static final MyLog _log = MyLog.getLog(RPCPayChannelService.class);
 
-    @Override
+    
     public Map selectPayChannel(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();

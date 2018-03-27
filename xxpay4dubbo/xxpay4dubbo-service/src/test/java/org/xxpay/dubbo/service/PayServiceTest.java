@@ -9,8 +9,8 @@ import org.xxpay.common.util.MySeq;
 import org.xxpay.common.util.RpcUtil;
 import org.xxpay.dal.dao.model.RefundOrder;
 import org.xxpay.dal.dao.model.TransOrder;
-import org.xxpay.dubbo.api.service.IPayChannel4AliService;
-import org.xxpay.dubbo.api.service.IPayChannel4WxService;
+import org.xxpay.dubbo.service.impl.RPCPayChannel4AliService;
+import org.xxpay.dubbo.service.impl.RPCPayChannel4WxService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,10 +25,10 @@ import java.util.Map;
 public class PayServiceTest {
 
     @Autowired
-    IPayChannel4AliService payChannel4AliService;
+    RPCPayChannel4AliService RPCPayChannel4AliService;
 
     @Autowired
-    IPayChannel4WxService payChannel4WxService;
+    RPCPayChannel4WxService RPCPayChannel4WxService;
 
     String TransOrderId = System.currentTimeMillis()+"";
 
@@ -44,7 +44,7 @@ public class PayServiceTest {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("transOrder", transOrder);
         String jsonParam = RpcUtil.createBaseParam(paramMap);
-        Map map = payChannel4AliService.doAliTransReq(jsonParam);
+        Map map = RPCPayChannel4AliService.doAliTransReq(jsonParam);
         System.out.println("map=" + map);
     }
 
@@ -59,7 +59,7 @@ public class PayServiceTest {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("transOrder", transOrder);
         String jsonParam = RpcUtil.createBaseParam(paramMap);
-        Map map = payChannel4AliService.getAliTransReq(jsonParam);
+        Map map = RPCPayChannel4AliService.getAliTransReq(jsonParam);
         System.out.println("map=" + map);
     }
 
@@ -79,7 +79,7 @@ public class PayServiceTest {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("refundOrder", refundOrder);
         String jsonParam = RpcUtil.createBaseParam(paramMap);
-        Map map = payChannel4AliService.doAliRefundReq(jsonParam);
+        Map map = RPCPayChannel4AliService.doAliRefundReq(jsonParam);
         System.out.println("map=" + map);
     }
 
@@ -99,7 +99,7 @@ public class PayServiceTest {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("refundOrder", refundOrder);
         String jsonParam = RpcUtil.createBaseParam(paramMap);
-        Map map = payChannel4AliService.getAliRefundReq(jsonParam);
+        Map map = RPCPayChannel4AliService.getAliRefundReq(jsonParam);
         System.out.println("map=" + map);
     }
 
@@ -118,7 +118,7 @@ public class PayServiceTest {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("transOrder", transOrder);
         String jsonParam = RpcUtil.createBaseParam(paramMap);
-        Map map = payChannel4WxService.doWxTransReq(jsonParam);
+        Map map = RPCPayChannel4WxService.doWxTransReq(jsonParam);
         System.out.println("map=" + map);
     }
     //
@@ -133,7 +133,7 @@ public class PayServiceTest {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("transOrder", transOrder);
         String jsonParam = RpcUtil.createBaseParam(paramMap);
-        Map map = payChannel4WxService.getWxTransReq(jsonParam);
+        Map map = RPCPayChannel4WxService.getWxTransReq(jsonParam);
         System.out.println("map=" + map);
     }
 
@@ -153,7 +153,7 @@ public class PayServiceTest {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("refundOrder", refundOrder);
         String jsonParam = RpcUtil.createBaseParam(paramMap);
-        Map map = payChannel4WxService.doWxRefundReq(jsonParam);
+        Map map = RPCPayChannel4WxService.doWxRefundReq(jsonParam);
         System.out.println("map=" + map);
     }
 
@@ -171,7 +171,7 @@ public class PayServiceTest {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("refundOrder", refundOrder);
         String jsonParam = RpcUtil.createBaseParam(paramMap);
-        Map map = payChannel4WxService.getWxRefundReq(jsonParam);
+        Map map = RPCPayChannel4WxService.getWxRefundReq(jsonParam);
         System.out.println("map=" + map);
     }
 

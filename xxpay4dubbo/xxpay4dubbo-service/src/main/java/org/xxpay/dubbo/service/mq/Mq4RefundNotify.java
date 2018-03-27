@@ -3,8 +3,6 @@ package org.xxpay.dubbo.service.mq;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.activemq.ScheduledMessage;
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
@@ -15,10 +13,10 @@ import org.xxpay.common.util.MyLog;
 import org.xxpay.common.util.RpcUtil;
 import org.xxpay.common.util.StrUtil;
 import org.xxpay.dal.dao.model.RefundOrder;
-import org.xxpay.dubbo.api.service.IPayChannel4AliService;
-import org.xxpay.dubbo.api.service.IPayChannel4WxService;
 import org.xxpay.dubbo.service.BaseNotify4MchRefund;
 import org.xxpay.dubbo.service.BaseService4RefundOrder;
+import org.xxpay.dubbo.service.impl.RPCPayChannel4AliService;
+import org.xxpay.dubbo.service.impl.RPCPayChannel4WxService;
 
 import javax.jms.*;
 import java.util.HashMap;
@@ -40,11 +38,9 @@ public class Mq4RefundNotify extends BaseService4RefundOrder {
     @Autowired
     private JmsTemplate jmsTemplate;
 
-    @Autowired
-    private IPayChannel4WxService payChannel4WxService;
+    private RPCPayChannel4WxService RPCPayChannel4WxService;
 
-    @Autowired
-    private IPayChannel4AliService payChannel4AliService;
+    private RPCPayChannel4AliService RPCPayChannel4AliService;
 
     @Autowired
     private BaseNotify4MchRefund baseNotify4MchRefund;
@@ -99,9 +95,9 @@ public class Mq4RefundNotify extends BaseService4RefundOrder {
         String jsonParam = RpcUtil.createBaseParam(paramMap);
         Map resultMap;
         if(PayConstant.CHANNEL_NAME_WX.equalsIgnoreCase(channelName)) {
-            resultMap = payChannel4WxService.doWxRefundReq(jsonParam);
+            resultMap = RPCPayChannel4WxService.doWxRefundReq(jsonParam);
         }else if(PayConstant.CHANNEL_NAME_ALIPAY.equalsIgnoreCase(channelName)) {
-            resultMap = payChannel4AliService.doAliRefundReq(jsonParam);
+            resultMap = RPCPayChannel4AliService.doAliRefundReq(jsonParam);
         }else {
             _log.warn("不支持的退款渠道,停止退款处理.refundOrderId={},channelName={}", refundOrderId, channelName);
             return;

@@ -8,6 +8,10 @@ import org.xxpay.common.constant.PayConstant;
 import org.xxpay.common.util.MyLog;
 import org.xxpay.common.util.RpcUtil;
 import org.xxpay.common.util.XXPayUtil;
+import org.xxpay.dubbo.service.impl.RPCNotifyPayService;
+import org.xxpay.dubbo.service.impl.RPCPayChannel4AliService;
+import org.xxpay.dubbo.service.impl.RPCPayChannel4WxService;
+import org.xxpay.dubbo.service.impl.RPCPayOrderService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,14 +26,19 @@ public class PayOrderService {
 
     private static final MyLog _log = MyLog.getLog(PayOrderService.class);
 
-    @Autowired
-    private RpcCommonService rpcCommonService;
+    private RPCPayOrderService rpcPayOrderService;
+
+    private RPCPayChannel4WxService rpcPayChannel4WxService;
+
+    private RPCPayChannel4AliService rpcPayChannel4AliService;
+
+    private RPCNotifyPayService rpcNotifyPayService;
 
     public int create(JSONObject payOrder) {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("payOrder", payOrder);
         String jsonParam = RpcUtil.createBaseParam(paramMap);
-        Map<String, Object> result = rpcCommonService.rpcPayOrderService.create(jsonParam);
+        Map<String, Object> result = rpcPayOrderService.create(jsonParam);
         String s = RpcUtil.mkRet(result);
         if(s == null) return 0;
         return Integer.parseInt(s);
@@ -42,12 +51,12 @@ public class PayOrderService {
             paramMap.put("mchId", mchId);
             paramMap.put("payOrderId", payOrderId);
             String jsonParam = RpcUtil.createBaseParam(paramMap);
-            result = rpcCommonService.rpcPayOrderService.selectByMchIdAndPayOrderId(jsonParam);
+            result = rpcPayOrderService.selectByMchIdAndPayOrderId(jsonParam);
         }else {
             paramMap.put("mchId", mchId);
             paramMap.put("mchOrderNo", mchOrderNo);
             String jsonParam = RpcUtil.createBaseParam(paramMap);
-            result = rpcCommonService.rpcPayOrderService.selectByMchIdAndMchOrderNo(jsonParam);
+            result = rpcPayOrderService.selectByMchIdAndMchOrderNo(jsonParam);
         }
         String s = RpcUtil.mkRet(result);
         if(s == null) return null;
@@ -57,7 +66,7 @@ public class PayOrderService {
             paramMap = new HashMap<>();
             paramMap.put("payOrderId", payOrderId);
             String jsonParam = RpcUtil.createBaseParam(paramMap);
-            result = rpcCommonService.rpcNotifyPayService.sendBizPayNotify(jsonParam);
+            result = rpcNotifyPayService.sendBizPayNotify(jsonParam);
             s = RpcUtil.mkRet(result);
             _log.info("业务查单完成,并再次发送业务支付通知.发送结果:{}", s);
         }
@@ -69,7 +78,7 @@ public class PayOrderService {
         paramMap.put("tradeType", tradeType);
         paramMap.put("payOrder", payOrder);
         String jsonParam = RpcUtil.createBaseParam(paramMap);
-        Map<String, Object> result = rpcCommonService.rpcPayChannel4WxService.doWxPayReq(jsonParam);
+        Map<String, Object> result = rpcPayChannel4WxService.doWxPayReq(jsonParam);
         String s = RpcUtil.mkRet(result);
         if(s == null) {
             return XXPayUtil.makeRetData(XXPayUtil.makeRetMap(PayConstant.RETURN_VALUE_SUCCESS, "", PayConstant.RETURN_VALUE_FAIL, "0111", "调用微信支付失败"), resKey);
@@ -86,16 +95,16 @@ public class PayOrderService {
         Map<String, Object> result;
         switch (channelId) {
             case PayConstant.PAY_CHANNEL_ALIPAY_MOBILE :
-                result = rpcCommonService.rpcPayChannel4AliService.doAliPayMobileReq(jsonParam);
+                result = rpcPayChannel4AliService.doAliPayMobileReq(jsonParam);
                 break;
             case PayConstant.PAY_CHANNEL_ALIPAY_PC :
-                result = rpcCommonService.rpcPayChannel4AliService.doAliPayPcReq(jsonParam);
+                result = rpcPayChannel4AliService.doAliPayPcReq(jsonParam);
                 break;
             case PayConstant.PAY_CHANNEL_ALIPAY_WAP :
-                result = rpcCommonService.rpcPayChannel4AliService.doAliPayWapReq(jsonParam);
+                result = rpcPayChannel4AliService.doAliPayWapReq(jsonParam);
                 break;
             case PayConstant.PAY_CHANNEL_ALIPAY_QR :
-                result = rpcCommonService.rpcPayChannel4AliService.doAliPayQrReq(jsonParam);
+                result = rpcPayChannel4AliService.doAliPayQrReq(jsonParam);
                 break;
             default:
                 result = null;

@@ -9,7 +9,6 @@ import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.xxpay.common.constant.PayConstant;
@@ -18,7 +17,6 @@ import org.xxpay.common.enumm.RetEnum;
 import org.xxpay.common.util.*;
 import org.xxpay.dal.dao.model.PayChannel;
 import org.xxpay.dal.dao.model.PayOrder;
-import org.xxpay.dubbo.api.service.INotifyPayService;
 import org.xxpay.dubbo.service.BaseNotify4MchPay;
 import org.xxpay.dubbo.service.channel.alipay.AlipayConfig;
 import org.xxpay.dubbo.service.channel.wechat.WxPayUtil;
@@ -33,14 +31,13 @@ import java.util.Map;
  * @description:
  */
 @Service(version = "1.0.0")
-public class NotifyPayServiceImpl extends BaseNotify4MchPay implements INotifyPayService {
+public class RPCNotifyPayService extends BaseNotify4MchPay {
 
-    private static final MyLog _log = MyLog.getLog(NotifyPayServiceImpl.class);
+    private static final MyLog _log = MyLog.getLog(RPCNotifyPayService.class);
 
     @Autowired
     private AlipayConfig alipayConfig;
 
-    @Override
     public Map doAliPayNotify(String jsonParam) {
         String logPrefix = "【处理支付宝支付回调】";
         _log.info("====== 开始处理支付宝支付回调通知 ======");
@@ -90,7 +87,7 @@ public class NotifyPayServiceImpl extends BaseNotify4MchPay implements INotifyPa
         return RpcUtil.createBizResult(baseParam, PayConstant.RETURN_ALIPAY_VALUE_SUCCESS);
     }
 
-    @Override
+    
     public Map doWxPayNotify(String jsonParam) {
         String logPrefix = "【处理微信支付回调】";
         _log.info("====== 开始处理微信支付回调通知 ======");
@@ -149,7 +146,7 @@ public class NotifyPayServiceImpl extends BaseNotify4MchPay implements INotifyPa
         }
     }
 
-    @Override
+    
     public Map sendBizPayNotify(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();

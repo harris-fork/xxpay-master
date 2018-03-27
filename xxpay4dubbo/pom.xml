@@ -11,7 +11,6 @@
     <description>xxpay4dubbo</description>
 
     <modules>
-        <module>xxpay4dubbo-api</module>
         <module>xxpay4dubbo-web</module>
         <module>xxpay4dubbo-service</module>
     </modules>

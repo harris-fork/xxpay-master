@@ -20,7 +20,6 @@ import org.xxpay.dal.dao.model.PayChannel;
 import org.xxpay.dal.dao.model.PayOrder;
 import org.xxpay.dal.dao.model.RefundOrder;
 import org.xxpay.dal.dao.model.TransOrder;
-import org.xxpay.dubbo.api.service.IPayChannel4WxService;
 import org.xxpay.dubbo.service.BaseService;
 import org.xxpay.dubbo.service.BaseService4PayOrder;
 import org.xxpay.dubbo.service.channel.wechat.WxPayProperties;
@@ -38,9 +37,9 @@ import java.util.Map;
  * @Copyright: www.xxpay.org
  */
 @Service(version = "1.0.0")
-public class PayChannel4WxServiceImpl extends BaseService implements IPayChannel4WxService {
+public class RPCPayChannel4WxService extends BaseService {
 
-    private final MyLog _log = MyLog.getLog(PayChannel4WxServiceImpl.class);
+    private final MyLog _log = MyLog.getLog(RPCPayChannel4WxService.class);
 
     @Resource
     private WxPayProperties wxPayProperties;
@@ -147,7 +146,6 @@ public class PayChannel4WxServiceImpl extends BaseService implements IPayChannel
         }
     }
 
-    @Override
     public Map doWxTransReq(String jsonParam) {
         String logPrefix = "【微信企业付款】";
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
@@ -197,7 +195,6 @@ public class PayChannel4WxServiceImpl extends BaseService implements IPayChannel
         }
     }
 
-    @Override
     public Map getWxTransReq(String jsonParam) {
         String logPrefix = "【微信企业付款查询】";
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
@@ -245,7 +242,6 @@ public class PayChannel4WxServiceImpl extends BaseService implements IPayChannel
         }
     }
 
-    @Override
     public Map doWxRefundReq(String jsonParam) {
         String logPrefix = "【微信退款】";
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
@@ -294,7 +290,6 @@ public class PayChannel4WxServiceImpl extends BaseService implements IPayChannel
         }
     }
 
-    @Override
     public Map getWxRefundReq(String jsonParam) {
         String logPrefix = "【微信退款查询】";
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);

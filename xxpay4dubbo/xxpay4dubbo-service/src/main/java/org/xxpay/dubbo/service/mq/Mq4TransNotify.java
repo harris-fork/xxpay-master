@@ -3,36 +3,21 @@ package org.xxpay.dubbo.service.mq;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.activemq.ScheduledMessage;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.xxpay.common.constant.PayConstant;
 import org.xxpay.common.util.MyLog;
 import org.xxpay.common.util.RpcUtil;
 import org.xxpay.dal.dao.model.TransOrder;
-import org.xxpay.dubbo.api.service.IPayChannel4AliService;
-import org.xxpay.dubbo.api.service.IPayChannel4WxService;
 import org.xxpay.dubbo.service.BaseNotify4MchTrans;
-import org.xxpay.dubbo.service.BaseService;
 import org.xxpay.dubbo.service.BaseService4TransOrder;
+import org.xxpay.dubbo.service.impl.RPCPayChannel4AliService;
+import org.xxpay.dubbo.service.impl.RPCPayChannel4WxService;
 
 import javax.jms.*;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,11 +37,9 @@ public class Mq4TransNotify extends BaseService4TransOrder {
     @Autowired
     private JmsTemplate jmsTemplate;
 
-    @Autowired
-    private IPayChannel4WxService payChannel4WxService;
+    private RPCPayChannel4WxService RPCPayChannel4WxService;
 
-    @Autowired
-    private IPayChannel4AliService payChannel4AliService;
+    private RPCPayChannel4AliService RPCPayChannel4AliService;
 
     @Autowired
     private BaseNotify4MchTrans baseNotify4MchTrans;
@@ -111,9 +94,9 @@ public class Mq4TransNotify extends BaseService4TransOrder {
         String jsonParam = RpcUtil.createBaseParam(paramMap);
         Map resultMap;
         if(PayConstant.CHANNEL_NAME_WX.equalsIgnoreCase(channelName)) {
-            resultMap = payChannel4WxService.doWxTransReq(jsonParam);
+            resultMap = RPCPayChannel4WxService.doWxTransReq(jsonParam);
         }else if(PayConstant.CHANNEL_NAME_ALIPAY.equalsIgnoreCase(channelName)) {
-            resultMap = payChannel4AliService.doAliTransReq(jsonParam);
+            resultMap = RPCPayChannel4AliService.doAliTransReq(jsonParam);
         }else {
             _log.warn("不支持的转账渠道,停止转账处理.transOrderId={},channelName={}", transOrderId, channelName);
             return;

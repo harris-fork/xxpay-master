@@ -19,11 +19,6 @@
     <dependencies>
         <dependency>
             <groupId>org.xxpay</groupId>
-            <artifactId>xxpay4dubbo-api</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.xxpay</groupId>
             <artifactId>xxpay-dal</artifactId>
             <version>1.0.0</version>
         </dependency>

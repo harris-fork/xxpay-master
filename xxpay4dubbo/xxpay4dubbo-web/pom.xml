@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>org.xxpay</groupId>
-            <artifactId>xxpay4dubbo-api</artifactId>
+            <artifactId>xxpay4dubbo-service</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>

@@ -6,7 +6,6 @@ import org.xxpay.common.domain.BaseParam;
 import org.xxpay.common.enumm.RetEnum;
 import org.xxpay.common.util.*;
 import org.xxpay.dal.dao.model.PayOrder;
-import org.xxpay.dubbo.api.service.IPayOrderService;
 import org.xxpay.dubbo.service.BaseService4PayOrder;
 
 import java.util.Map;
@@ -17,11 +16,11 @@ import java.util.Map;
  * @description:
  */
 @Service(version = "1.0.0")
-public class PayOrderServiceImpl extends BaseService4PayOrder implements IPayOrderService {
+public class RPCPayOrderService extends BaseService4PayOrder {
 
-    private static final MyLog _log = MyLog.getLog(PayOrderServiceImpl.class);
+    private static final MyLog _log = MyLog.getLog(RPCPayOrderService.class);
 
-    @Override
+    
     public Map create(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -43,7 +42,7 @@ public class PayOrderServiceImpl extends BaseService4PayOrder implements IPayOrd
         return RpcUtil.createBizResult(baseParam, result);
     }
 
-    @Override
+    
     public Map select(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -62,7 +61,7 @@ public class PayOrderServiceImpl extends BaseService4PayOrder implements IPayOrd
         return RpcUtil.createBizResult(baseParam, jsonResult);
     }
 
-    @Override
+    
     public Map selectByMchIdAndPayOrderId(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -82,7 +81,7 @@ public class PayOrderServiceImpl extends BaseService4PayOrder implements IPayOrd
         return RpcUtil.createBizResult(baseParam, jsonResult);
     }
 
-    @Override
+    
     public Map selectByMchIdAndMchOrderNo(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -102,7 +101,7 @@ public class PayOrderServiceImpl extends BaseService4PayOrder implements IPayOrd
         return RpcUtil.createBizResult(baseParam, jsonResult);
     }
 
-    @Override
+    
     public Map updateStatus4Ing(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -120,7 +119,7 @@ public class PayOrderServiceImpl extends BaseService4PayOrder implements IPayOrd
         return RpcUtil.createBizResult(baseParam, result);
     }
 
-    @Override
+    
     public Map updateStatus4Success(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -137,7 +136,7 @@ public class PayOrderServiceImpl extends BaseService4PayOrder implements IPayOrd
         return RpcUtil.createBizResult(baseParam, result);
     }
 
-    @Override
+    
     public Map updateStatus4Complete(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -154,7 +153,7 @@ public class PayOrderServiceImpl extends BaseService4PayOrder implements IPayOrd
         return RpcUtil.createBizResult(baseParam, result);
     }
 
-    @Override
+    
     public Map updateNotify(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();

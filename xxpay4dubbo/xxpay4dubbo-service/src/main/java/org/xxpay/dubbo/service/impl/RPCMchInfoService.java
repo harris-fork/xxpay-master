@@ -8,7 +8,6 @@ import org.xxpay.common.util.MyLog;
 import org.xxpay.common.util.ObjectValidUtil;
 import org.xxpay.common.util.RpcUtil;
 import org.xxpay.dal.dao.model.MchInfo;
-import org.xxpay.dubbo.api.service.IMchInfoService;
 import org.xxpay.dubbo.service.BaseService;
 
 import java.util.Map;
@@ -19,11 +18,10 @@ import java.util.Map;
  * @description:
  */
 @Service(version = "1.0.0")
-public class MchInfoServiceImpl extends BaseService implements IMchInfoService {
+public class RPCMchInfoService extends BaseService {
 
-    private static final MyLog _log = MyLog.getLog(MchInfoServiceImpl.class);
+    private static final MyLog _log = MyLog.getLog(RPCMchInfoService.class);
 
-    @Override
     public Map selectMchInfo(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
