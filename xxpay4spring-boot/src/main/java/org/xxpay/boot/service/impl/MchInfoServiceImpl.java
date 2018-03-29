@@ -3,7 +3,6 @@ package org.xxpay.boot.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
 import org.xxpay.boot.service.BaseService;
-import org.xxpay.boot.service.IMchInfoService;
 import org.xxpay.common.domain.BaseParam;
 import org.xxpay.common.enumm.RetEnum;
 import org.xxpay.common.util.JsonUtil;
@@ -21,11 +20,10 @@ import java.util.Map;
  * @description:
  */
 @Service
-public class MchInfoServiceImpl extends BaseService implements IMchInfoService {
+public class MchInfoServiceImpl extends BaseService {
 
     private static final MyLog _log = MyLog.getLog(MchInfoServiceImpl.class);
-
-    @Override
+    
     public Map selectMchInfo(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();

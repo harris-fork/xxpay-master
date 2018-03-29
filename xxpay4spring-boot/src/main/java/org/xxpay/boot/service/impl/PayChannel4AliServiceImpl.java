@@ -18,7 +18,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.xxpay.boot.service.BaseService;
-import org.xxpay.boot.service.IPayChannel4AliService;
 import org.xxpay.boot.service.channel.alipay.AlipayConfig;
 import org.xxpay.common.constant.PayConstant;
 import org.xxpay.common.domain.BaseParam;
@@ -35,14 +34,13 @@ import java.util.Map;
  * @description:
  */
 @Service
-public class PayChannel4AliServiceImpl extends BaseService implements IPayChannel4AliService {
+public class PayChannel4AliServiceImpl extends BaseService {
 
     private static final MyLog _log = MyLog.getLog(PayChannel4AliServiceImpl.class);
 
     @Autowired
     private AlipayConfig alipayConfig;
 
-    @Override
     public Map doAliPayWapReq(String jsonParam) {
         String logPrefix = "【支付宝WAP支付下单】";
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
@@ -104,7 +102,6 @@ public class PayChannel4AliServiceImpl extends BaseService implements IPayChanne
         return RpcUtil.createBizResult(baseParam, map);
     }
 
-    @Override
     public Map doAliPayPcReq(String jsonParam) {
         String logPrefix = "【支付宝PC支付下单】";
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
@@ -169,7 +166,6 @@ public class PayChannel4AliServiceImpl extends BaseService implements IPayChanne
         return RpcUtil.createBizResult(baseParam, map);
     }
 
-    @Override
     public Map doAliPayMobileReq(String jsonParam) {
         String logPrefix = "【支付宝APP支付下单】";
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
@@ -218,7 +214,6 @@ public class PayChannel4AliServiceImpl extends BaseService implements IPayChanne
         return RpcUtil.createBizResult(baseParam, map);
     }
 
-    @Override
     public Map doAliPayQrReq(String jsonParam) {
         String logPrefix = "【支付宝当面付之扫码支付下单】";
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);

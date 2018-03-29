@@ -12,7 +12,6 @@ import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
 import com.github.binarywang.wxpay.util.SignUtils;
 import org.springframework.stereotype.Service;
 import org.xxpay.boot.service.BaseService;
-import org.xxpay.boot.service.IPayChannel4WxService;
 import org.xxpay.boot.service.channel.wechat.WxPayProperties;
 import org.xxpay.boot.service.channel.wechat.WxPayUtil;
 import org.xxpay.common.constant.PayConstant;
@@ -34,7 +33,7 @@ import java.util.Map;
  * @Copyright: www.xxpay.org
  */
 @Service
-public class PayChannel4WxServiceImpl extends BaseService implements IPayChannel4WxService {
+public class PayChannel4WxServiceImpl extends BaseService {
 
     private final MyLog _log = MyLog.getLog(PayChannel4WxServiceImpl.class);
 

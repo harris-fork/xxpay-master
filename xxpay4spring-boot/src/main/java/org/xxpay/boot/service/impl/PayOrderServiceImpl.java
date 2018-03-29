@@ -20,7 +20,7 @@ import java.util.Map;
  * @description:
  */
 @Service
-public class PayOrderServiceImpl extends BaseService implements IPayOrderService {
+public class PayOrderServiceImpl extends BaseService {
 
     private static final MyLog _log = MyLog.getLog(PayOrderServiceImpl.class);
 
@@ -28,10 +28,10 @@ public class PayOrderServiceImpl extends BaseService implements IPayOrderService
     private NotifyPayServiceImpl notifyPayService;
 
     @Autowired
-    private IPayChannel4WxService payChannel4WxService;
+    private PayChannel4WxServiceImpl payChannel4WxService;
 
     @Autowired
-    private IPayChannel4AliService payChannel4AliService;
+    private PayChannel4AliServiceImpl payChannel4AliService;
 
     public int createPayOrder(JSONObject payOrder) {
         Map<String,Object> paramMap = new HashMap<>();
@@ -118,7 +118,7 @@ public class PayOrderServiceImpl extends BaseService implements IPayOrderService
         return XXPayUtil.makeRetData(map, resKey);
     }
 
-    @Override
+    
     public Map createPayOrder(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -140,7 +140,6 @@ public class PayOrderServiceImpl extends BaseService implements IPayOrderService
         return RpcUtil.createBizResult(baseParam, result);
     }
 
-    @Override
     public Map selectPayOrder(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -159,7 +158,6 @@ public class PayOrderServiceImpl extends BaseService implements IPayOrderService
         return RpcUtil.createBizResult(baseParam, jsonResult);
     }
 
-    @Override
     public Map selectPayOrderByMchIdAndPayOrderId(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -179,7 +177,6 @@ public class PayOrderServiceImpl extends BaseService implements IPayOrderService
         return RpcUtil.createBizResult(baseParam, jsonResult);
     }
 
-    @Override
     public Map selectPayOrderByMchIdAndMchOrderNo(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -199,7 +196,6 @@ public class PayOrderServiceImpl extends BaseService implements IPayOrderService
         return RpcUtil.createBizResult(baseParam, jsonResult);
     }
 
-    @Override
     public Map updateStatus4Ing(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -217,7 +213,6 @@ public class PayOrderServiceImpl extends BaseService implements IPayOrderService
         return RpcUtil.createBizResult(baseParam, result);
     }
 
-    @Override
     public Map updateStatus4Success(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -234,7 +229,6 @@ public class PayOrderServiceImpl extends BaseService implements IPayOrderService
         return RpcUtil.createBizResult(baseParam, result);
     }
 
-    @Override
     public Map updateStatus4Complete(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
@@ -251,7 +245,6 @@ public class PayOrderServiceImpl extends BaseService implements IPayOrderService
         return RpcUtil.createBizResult(baseParam, result);
     }
 
-    @Override
     public Map updateNotify(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
