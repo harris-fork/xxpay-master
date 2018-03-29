@@ -1,4 +1,4 @@
-package org.xxpay.boot.service.impl;
+package org.xxpay.boot.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -17,7 +17,6 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.xxpay.boot.service.BaseService;
 import org.xxpay.boot.service.channel.alipay.AlipayConfig;
 import org.xxpay.common.constant.PayConstant;
 import org.xxpay.common.domain.BaseParam;

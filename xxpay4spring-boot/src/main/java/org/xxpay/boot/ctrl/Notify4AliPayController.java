@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.xxpay.common.constant.PayConstant;
 import org.xxpay.common.util.MyLog;
-import org.xxpay.boot.service.impl.NotifyPayServiceImpl;
+import org.xxpay.boot.service.NotifyPayServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

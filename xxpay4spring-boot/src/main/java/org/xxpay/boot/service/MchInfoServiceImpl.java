@@ -1,15 +1,14 @@
-package org.xxpay.boot.service.impl;
+package org.xxpay.boot.service;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Service;
-import org.xxpay.boot.service.BaseService;
 import org.xxpay.common.domain.BaseParam;
 import org.xxpay.common.enumm.RetEnum;
 import org.xxpay.common.util.JsonUtil;
 import org.xxpay.common.util.MyLog;
 import org.xxpay.common.util.ObjectValidUtil;
 import org.xxpay.common.util.RpcUtil;
-import org.xxpay.dal.dao.model.PayChannel;
+import org.xxpay.dal.dao.model.MchInfo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,37 +19,35 @@ import java.util.Map;
  * @description:
  */
 @Service
-public class PayChannelServiceImpl extends BaseService {
+public class MchInfoServiceImpl extends BaseService {
 
-    private static final MyLog _log = MyLog.getLog(PayChannelServiceImpl.class);
+    private static final MyLog _log = MyLog.getLog(MchInfoServiceImpl.class);
 
-    public Map selectPayChannel(String jsonParam) {
+    public Map selectMchInfo(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();
         if (ObjectValidUtil.isInvalid(bizParamMap)) {
-            _log.warn("查询支付渠道信息失败, {}. jsonParam={}", RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
+            _log.warn("查询商户信息失败, {}. jsonParam={}", RetEnum.RET_PARAM_NOT_FOUND.getMessage(), jsonParam);
             return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_NOT_FOUND);
         }
         String mchId = baseParam.isNullValue("mchId") ? null : bizParamMap.get("mchId").toString();
-        String channelId = baseParam.isNullValue("channelId") ? null : bizParamMap.get("channelId").toString();
-        if (ObjectValidUtil.isInvalid(mchId, channelId)) {
-            _log.warn("查询支付渠道信息失败, {}. jsonParam={}", RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
+        if (ObjectValidUtil.isInvalid(mchId)) {
+            _log.warn("查询商户信息失败, {}. jsonParam={}", RetEnum.RET_PARAM_INVALID.getMessage(), jsonParam);
             return RpcUtil.createFailResult(baseParam, RetEnum.RET_PARAM_INVALID);
         }
-        PayChannel payChannel = super.baseSelectPayChannel(mchId, channelId);
-        if(payChannel == null) return RpcUtil.createFailResult(baseParam, RetEnum.RET_BIZ_DATA_NOT_EXISTS);
-        String jsonResult = JsonUtil.object2Json(payChannel);
+        MchInfo mchInfo = super.baseSelectMchInfo(mchId);
+        if(mchInfo == null) return RpcUtil.createFailResult(baseParam, RetEnum.RET_BIZ_DATA_NOT_EXISTS);
+        String jsonResult = JsonUtil.object2Json(mchInfo);
         return RpcUtil.createBizResult(baseParam, jsonResult);
     }
 
-    public JSONObject getByMchIdAndChannelId(String mchId, String channelId) {
+    public JSONObject getByMchId(String mchId) {
         Map<String,Object> paramMap = new HashMap<>();
         paramMap.put("mchId", mchId);
-        paramMap.put("channelId", channelId);
         String jsonParam = RpcUtil.createBaseParam(paramMap);
-        Map<String, Object> result = selectPayChannel(jsonParam);
+        Map<String, Object> result = selectMchInfo(jsonParam);
         String s = RpcUtil.mkRet(result);
-        if(s == null) return null;
+        if(s==null) return null;
         return JSONObject.parseObject(s);
     }
 }

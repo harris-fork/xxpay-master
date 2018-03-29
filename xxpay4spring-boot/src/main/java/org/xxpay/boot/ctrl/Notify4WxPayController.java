@@ -1,11 +1,10 @@
 package org.xxpay.boot.ctrl;
 
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.xxpay.boot.service.impl.NotifyPayServiceImpl;
+import org.xxpay.boot.service.NotifyPayServiceImpl;
 import org.xxpay.common.util.MyLog;
 
 import javax.servlet.ServletException;

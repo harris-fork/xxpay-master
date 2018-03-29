@@ -1,4 +1,4 @@
-package org.xxpay.boot.service.impl;
+package org.xxpay.boot.service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -11,7 +11,6 @@ import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
 import com.github.binarywang.wxpay.util.SignUtils;
 import org.springframework.stereotype.Service;
-import org.xxpay.boot.service.BaseService;
 import org.xxpay.boot.service.channel.wechat.WxPayProperties;
 import org.xxpay.boot.service.channel.wechat.WxPayUtil;
 import org.xxpay.common.constant.PayConstant;

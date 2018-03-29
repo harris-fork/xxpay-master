@@ -1,4 +1,4 @@
-package org.xxpay.boot.service.impl;
+package org.xxpay.boot.service;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
@@ -11,7 +11,6 @@ import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.xxpay.boot.service.Notify4BasePay;
 import org.xxpay.boot.service.channel.alipay.AlipayConfig;
 import org.xxpay.boot.service.channel.wechat.WxPayUtil;
 import org.xxpay.common.constant.PayConstant;
