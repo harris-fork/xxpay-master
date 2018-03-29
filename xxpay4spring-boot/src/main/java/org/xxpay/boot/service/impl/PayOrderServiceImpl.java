@@ -25,7 +25,7 @@ public class PayOrderServiceImpl extends BaseService implements IPayOrderService
     private static final MyLog _log = MyLog.getLog(PayOrderServiceImpl.class);
 
     @Autowired
-    private INotifyPayService notifyPayService;
+    private NotifyPayServiceImpl notifyPayService;
 
     @Autowired
     private IPayChannel4WxService payChannel4WxService;

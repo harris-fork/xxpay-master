@@ -11,7 +11,6 @@ import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.xxpay.boot.service.INotifyPayService;
 import org.xxpay.boot.service.Notify4BasePay;
 import org.xxpay.boot.service.channel.alipay.AlipayConfig;
 import org.xxpay.boot.service.channel.wechat.WxPayUtil;
@@ -35,14 +34,13 @@ import java.util.Map;
  * @description:
  */
 @Service
-public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPayService {
+public class NotifyPayServiceImpl extends Notify4BasePay {
 
     private static final MyLog _log = MyLog.getLog(NotifyPayServiceImpl.class);
 
     @Autowired
     private AlipayConfig alipayConfig;
 
-    @Override
     public Map doAliPayNotify(String jsonParam) {
         String logPrefix = "【处理支付宝支付回调】";
         _log.info("====== 开始处理支付宝支付回调通知 ======");
@@ -92,7 +90,6 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
         return RpcUtil.createBizResult(baseParam, PayConstant.RETURN_ALIPAY_VALUE_SUCCESS);
     }
 
-    @Override
     public Map doWxPayNotify(String jsonParam) {
         String logPrefix = "【处理微信支付回调】";
         _log.info("====== 开始处理微信支付回调通知 ======");
@@ -151,7 +148,6 @@ public class NotifyPayServiceImpl extends Notify4BasePay implements INotifyPaySe
         }
     }
 
-    @Override
     public Map sendBizPayNotify(String jsonParam) {
         BaseParam baseParam = JsonUtil.getObjectFromJson(jsonParam, BaseParam.class);
         Map<String, Object> bizParamMap = baseParam.getBizParamMap();

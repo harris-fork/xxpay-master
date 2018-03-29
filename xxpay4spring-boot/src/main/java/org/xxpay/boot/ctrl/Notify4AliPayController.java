@@ -1,12 +1,11 @@
 package org.xxpay.boot.ctrl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.xxpay.boot.service.INotifyPayService;
 import org.xxpay.common.constant.PayConstant;
 import org.xxpay.common.util.MyLog;
+import org.xxpay.boot.service.impl.NotifyPayServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,8 +26,7 @@ public class Notify4AliPayController {
 
 	private static final MyLog _log = MyLog.getLog(Notify4AliPayController.class);
 
-	@Autowired
-	private INotifyPayService notifyPayService;
+	private NotifyPayServiceImpl notifyPayService;
 
 	/**
 	 * 支付宝移动支付后台通知响应
